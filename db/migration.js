@@ -1,10 +1,13 @@
 var db = require('./db');
 
 var init = function () {
-    db.execute(createUsers)
+    db.execute((db) => {
+        users(db);
+        tags(db);
+    });
 };
 
-var createUsers = function (db) {
+var users = function (db) {
     db.createCollection("users",
         {
             'validator': {
@@ -14,8 +17,16 @@ var createUsers = function (db) {
                 ]
             }
         },
-        function (err, results) {
+        (err, results) => {
             console.log(" users Collection created.");
+        }
+    );
+};
+
+var tags = function (db) {
+    db.createCollection("tags",
+        {}, (err, results) => {
+            console.log("Tags Collection created.");
         }
     );
 };

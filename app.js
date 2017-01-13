@@ -9,6 +9,7 @@ var migration = require('./db/migration.js');
 
 var index = require('./routes/index');
 var user = require('./routes/user');
+var tag = require('./routes/tag');
 
 var app = express();
 
@@ -27,6 +28,7 @@ migration.init();
 
 app.use('/', index);
 app.use('/user', user);
+app.use('/tag', tag);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
