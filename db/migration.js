@@ -1,47 +1,42 @@
 var db = require('./db');
 
+var collections = [{
+    name: 'users',
+    validator: {
+        '$or': [
+            {'name': {'$type': "string"}},
+            {'email': {'$regex': /\.*\.com$/}}
+        ]
+    }
+}, {
+    name: 'tags',
+    validator: {
+        '$or': [
+            {'productId': {'$type': "uuid"}}
+        ]
+    }
+}, {
+    name: 'products',
+    validator: {
+        '$or': [
+            {'name': {'$type': "string"}}
+        ]
+    }
+}];
+
 var init = function () {
     db.execute((db) => {
-        users(db);
-        tags(db);
-        products(db);
+        collections.forEach(c => create(c, db));
     });
 };
 
-var users = function (db) {
-    db.createCollection("users",
+var create = function (c, db) {
+    db.createCollection(c.name,
         {
-            'validator': {
-                '$or': [
-                    {'name': {'$type': "string"}},
-                    {'email': {'$regex': /\.*\.com$/}}
-                ]
-            }
+            'validator': c.validator
         },
         (err, results) => {
-            console.log(" users Collection created.");
-        }
-    );
-};
-
-var tags = function (db) {
-    db.createCollection("tags",
-        {}, (err, results) => {
-            console.log("Tags Collection created.");
-        }
-    );
-};
-
-var products = function (db) {
-    db.createCollection("products",
-        {
-            'validator': {
-                '$or': [
-                    {'name': {'$type': "string"}}
-                ]
-            }
-        }, (err, results) => {
-            console.log("products Collection created.");
+            console.log(c.name, " Collection created.");
         }
     );
 };

@@ -14,6 +14,23 @@ var create = function (callback) {
     });
 };
 
+
+var update = function (tagId, productId, callback) {
+    console.log(tagId, productId);
+    db.execute((db) => {
+        var collection = db.collection('tags');
+        collection.update({_id: tagId}, {productId: productId}, function (err, r) {
+                assert.equal(null, err);
+                console.log("Tag is updated with product id");
+                collection.findOne({_id: tagId},(e,r) => {
+                    callback(r)
+                });
+            }
+        );
+    });
+};
+
 module.exports = {
-    create: create
+    create: create,
+    update: update
 };
