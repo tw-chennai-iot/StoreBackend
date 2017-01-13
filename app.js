@@ -22,17 +22,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 migration.init();
 
-var index = require('./routes/index');
-app.use('/', index);
+app.use('/', require('./routes/index'));
 
-var user = require('./routes/user');
-app.use('/user', user);
+app.use('/user', require('./routes/user'));
 
-var tag = require('./routes/tag');
-app.use('/tag', tag);
+app.use('/tag', require('./routes/tag'));
 
-var product = require('./routes/product');
-app.use('/product', product);
+app.use('/product', require('./routes/product'));
+
+app.use('/cart', require('./routes/cart'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

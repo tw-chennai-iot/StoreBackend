@@ -22,6 +22,9 @@ var collections = [{
             {'name': {'$type': "string"}}
         ]
     }
+}, {
+    name: "carts",
+    validator: {}
 }];
 
 var init = function () {
