@@ -4,6 +4,7 @@ var init = function () {
     db.execute((db) => {
         users(db);
         tags(db);
+        products(db);
     });
 };
 
@@ -27,6 +28,20 @@ var tags = function (db) {
     db.createCollection("tags",
         {}, (err, results) => {
             console.log("Tags Collection created.");
+        }
+    );
+};
+
+var products = function (db) {
+    db.createCollection("products",
+        {
+            'validator': {
+                '$or': [
+                    {'name': {'$type': "string"}}
+                ]
+            }
+        }, (err, results) => {
+            console.log("products Collection created.");
         }
     );
 };
