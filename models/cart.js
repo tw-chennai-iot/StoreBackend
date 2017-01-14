@@ -1,6 +1,7 @@
 var db = require('../db/db');
 var assert = require('assert');
 const uuidV4 = require('uuid/v4');
+var tag = require("./tag");
 
 var create = function (callback) {
     db.execute((db) => {
@@ -14,6 +15,11 @@ var create = function (callback) {
     });
 };
 
+var getDetails = function (cartId, callback) {
+    tag.getAllProductDetails(cartId, callback)
+};
+
 module.exports = {
-    create: create
+    create: create,
+    getDetails: getDetails
 };

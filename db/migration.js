@@ -12,7 +12,8 @@ var collections = [{
     name: 'tags',
     validator: {
         '$or': [
-            {'productId': {'$type': "uuid"}}
+            {'productId': {'$type': "uuid"}},
+            {'cartId': {'$type': "uuid"}}
         ]
     }
 }, {

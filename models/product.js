@@ -14,6 +14,28 @@ var create = function (productName, callback) {
     });
 };
 
+var getAll = function (productTagMap, callback) {
+    db.execute((db) => {
+        var collection = db.collection('products');
+        collection.find({
+            _id: {
+                $in: productTagMap.map((r) => r.productId)
+            }
+        }).toArray(function (err, products) {
+                assert.equal(null, err);
+                var map = productTagMap.map(pt => {
+                    return {
+                        tagId: pt._id,
+                        product: products.find(p => p._id === pt.productId)
+                    };
+                });
+                callback(map)
+            }
+        );
+    });
+};
+
 module.exports = {
-    create: create
+    create: create,
+    getAll: getAll
 };
