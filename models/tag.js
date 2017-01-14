@@ -64,7 +64,7 @@ var getAllProductDetails = function (cart, callback) {
                 product.getAll(r, (products) => {
                     var cartDetails = {
                         redirectUrl: 'http://' + process.env.serverAddress + '/cart/' + cartId,
-                        value: products.map(a => a.price).reduce((a, b) => a + b, 0),
+                        value: products.map(a => a.price).reduce((a, b) => Number(a) + Number(b), 0),
                         products: products,
                         status: cart.status
                     };
