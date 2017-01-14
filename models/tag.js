@@ -55,8 +55,9 @@ var deleteFromCart = function (tagId, cartId, callback) {
     });
 };
 
-var getAllProductDetails = function (cartId, callback) {
+var getAllProductDetails = function (cart, callback) {
     db.execute((db) => {
+        var cartId = cart._id;
         var collection = db.collection('tags');
         collection.find({cartId: cartId}).toArray(function (err, r) {
                 assert.equal(null, err);
@@ -64,7 +65,8 @@ var getAllProductDetails = function (cartId, callback) {
                     var cartDetails = {
                         redirectUrl: 'http://' + process.env.serverAddress + '/cart/' + cartId,
                         value: products.map(a => a.product.price).reduce((a, b) => a + b, 0),
-                        products: products
+                        products: products,
+                        status: cart.status
                     };
                     callback(cartDetails)
                 });

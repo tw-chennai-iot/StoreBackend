@@ -21,4 +21,8 @@ router.get('/:cartId', function (req, res) {
     cart.getDetails(req.params.cartId, (data) => res.json(data));
 });
 
+router.post('/:cartId/pay', function (req, res) {
+    cart.pay(req.params.cartId, () => cart.getDetails(req.params.cartId, (data) => res.json(data)));
+});
+
 module.exports = router;

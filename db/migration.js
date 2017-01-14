@@ -26,7 +26,11 @@ var collections = [{
     }
 }, {
     name: "carts",
-    validator: {}
+    validator: {
+        '$or': [
+            {'name': {'$type': "string"}}
+        ]
+    }
 }];
 
 var init = function () {

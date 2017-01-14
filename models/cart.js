@@ -15,11 +15,29 @@ var create = function (callback) {
     });
 };
 
+var pay = function (cartId, callback) {
+    db.execute((db) => {
+        var collection = db.collection('carts');
+        collection.update({_id: cartId}, {$set: {status: 'paid'}}, function (err, r) {
+                assert.equal(null, err);
+                console.log("cart is payed");
+                callback();
+            }
+        );
+    });
+};
+
 var getDetails = function (cartId, callback) {
-    tag.getAllProductDetails(cartId, callback)
+    db.execute((db) => {
+        var collection = db.collection('carts');
+        collection.find({_id: cartId}).toArray(function (err, r) {
+            tag.getAllProductDetails(r[0], callback)
+        });
+    });
 };
 
 module.exports = {
     create: create,
-    getDetails: getDetails
+    getDetails: getDetails,
+    pay: pay
 };
