@@ -12,8 +12,8 @@ router.post('/:cartId', function (req, res) {
 
 });
 
-router.delete('/:cartId', function (req, res) {
-    tag.deleteFromCart(req.body.tagId, req.params.cartId, () => cart.getDetails(req.params.cartId, (data) => res.json(data)));
+router.delete('/:cartId/tag/:tagId', function (req, res) {
+    tag.deleteFromCart(req.params.tagId, req.params.cartId, () => cart.getDetails(req.params.cartId, (data) => res.json(data)));
 
 });
 
