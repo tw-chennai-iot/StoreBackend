@@ -80,7 +80,11 @@ var check = function (tagId, callback) {
         var collection = db.collection('tags');
         collection.findOne({tagId: tagId}, function (err, r) {
                 assert.equal(null, err);
-                require('./cart').get(r.cartId, (cart) => callback(cart.status == 'paid'))
+                if (r.cartId) {
+                    require('./cart').get(r.cartId, (cart) => callback(cart.stawtus == 'paid'))
+                } else {
+                    callback(false)
+                }
             }
         );
     });

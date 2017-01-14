@@ -20,7 +20,7 @@ var pay = function (cartId, callback) {
         var collection = db.collection('carts');
         collection.update({_id: cartId}, {$set: {status: 'paid'}}, function (err, r) {
                 assert.equal(null, err);
-                console.log("cart is payed");
+                console.log("cart is paid");
                 callback();
             }
         );
