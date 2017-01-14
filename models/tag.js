@@ -1,6 +1,7 @@
 var db = require('../db/db');
 var assert = require('assert');
 var product = require('./product');
+var cart = require('./cart');
 const uuidV4 = require('uuid/v4');
 
 var create = function (callback) {
@@ -75,10 +76,23 @@ var getAllProductDetails = function (cart, callback) {
     });
 };
 
+var check = function (tagId, productId, callback) {
+    db.execute((db) => {
+        var collection = db.collection('tags');
+        collection.findOne({_id: tagId, productId: productId}, function (err, r) {
+                assert.equal(null, err);
+                console.log(r);
+                cart.get(r.cartId,(cart) => callback(cart.status == 'paid'))
+            }
+        );
+    });
+};
+
 module.exports = {
     create: create,
     update: update,
     addToCart: addToCart,
     getAllProductDetails: getAllProductDetails,
-    deleteFromCart: deleteFromCart
+    deleteFromCart: deleteFromCart,
+    check: check
 };

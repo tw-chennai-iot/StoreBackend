@@ -36,8 +36,18 @@ var getDetails = function (cartId, callback) {
     });
 };
 
+var get = function (cartId, callback) {
+    db.execute((db) => {
+        var collection = db.collection('carts');
+        collection.find({_id: cartId}).toArray(function (err, r) {
+            callback(r[0])
+        });
+    });
+};
+
 module.exports = {
     create: create,
     getDetails: getDetails,
-    pay: pay
+    pay: pay,
+    get: get
 };
