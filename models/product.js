@@ -26,7 +26,7 @@ var getAll = function (productTagMap, callback) {
                 var productDetails = productTagMap.map(pt => {
                     var product = products.find(p => p._id === pt.productId);
                     return {
-                        tagId: pt._id,
+                        tagId: pt.tagId,
                         productId: product._id,
                         name: product.name,
                         price: product.price
