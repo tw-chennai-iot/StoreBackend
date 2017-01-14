@@ -11,7 +11,7 @@ router.post('/:tagId', function (req, res) {
 });
 
 router.get('/:tagId/status', function (req, res) {
-    tag.check(req.params.tagId, (data) => res.send(data))
+    tag.check(req.params.tagId, (data) => res.send(data ? '1' : '0' ))
 });
 
 module.exports = router;
