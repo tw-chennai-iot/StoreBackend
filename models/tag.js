@@ -1,7 +1,6 @@
 var db = require('../db/db');
 var assert = require('assert');
 var product = require('./product');
-var cart = require('./cart');
 const uuidV4 = require('uuid/v4');
 
 var create = function (callback) {
@@ -82,7 +81,7 @@ var check = function (tagId, productId, callback) {
         collection.findOne({_id: tagId, productId: productId}, function (err, r) {
                 assert.equal(null, err);
                 console.log(r);
-                cart.get(r.cartId,(cart) => callback(cart.status == 'paid'))
+                require('./cart').get(r.cartId, (cart) => callback(cart.status == 'paid'))
             }
         );
     });
