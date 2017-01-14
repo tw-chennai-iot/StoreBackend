@@ -75,12 +75,11 @@ var getAllProductDetails = function (cart, callback) {
     });
 };
 
-var check = function (tagId, productId, callback) {
+var check = function (tagId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.findOne({_id: tagId, productId: productId}, function (err, r) {
+        collection.findOne({_id: tagId}, function (err, r) {
                 assert.equal(null, err);
-                console.log(r);
                 require('./cart').get(r.cartId, (cart) => callback(cart.status == 'paid'))
             }
         );
