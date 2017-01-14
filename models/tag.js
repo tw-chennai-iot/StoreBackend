@@ -60,7 +60,14 @@ var getAllProductDetails = function (cartId, callback) {
         var collection = db.collection('tags');
         collection.find({cartId: cartId}).toArray(function (err, r) {
                 assert.equal(null, err);
-                product.getAll(r, callback);
+                product.getAll(r, (products) => {
+                    var cartDetails = {
+                        redirectUrl: 'http://' + process.env.serverAddress + '/cart/' + cartId,
+                        value: products.map(a => a.product.price).reduce((a, b) => a + b, 0),
+                        products: products
+                    };
+                    callback(cartDetails)
+                });
             }
         );
     });

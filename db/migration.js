@@ -13,14 +13,15 @@ var collections = [{
     validator: {
         '$or': [
             {'productId': {'$type': "uuid"}},
-            {'cartId': {'$type': "uuid"}}
+            {'cartId': {'$type': "double"}}
         ]
     }
 }, {
     name: 'products',
     validator: {
         '$or': [
-            {'name': {'$type': "string"}}
+            {'name': {'$type': "string"}},
+            {'price': {'$type': "number"}}
         ]
     }
 }, {

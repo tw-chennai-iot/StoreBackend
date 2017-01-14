@@ -23,13 +23,13 @@ var getAll = function (productTagMap, callback) {
             }
         }).toArray(function (err, products) {
                 assert.equal(null, err);
-                var map = productTagMap.map(pt => {
+                var productDetails = productTagMap.map(pt => {
                     return {
                         tagId: pt._id,
                         product: products.find(p => p._id === pt.productId)
                     };
                 });
-                callback(map)
+                callback(productDetails)
             }
         );
     });

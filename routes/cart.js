@@ -17,4 +17,8 @@ router.delete('/:cartId', function (req, res) {
 
 });
 
+router.get('/:cartId', function (req, res) {
+    cart.getDetails(req.params.cartId, (data) => res.json(data));
+});
+
 module.exports = router;
