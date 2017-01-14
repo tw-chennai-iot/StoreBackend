@@ -28,7 +28,7 @@ var collections = [{
     name: "carts",
     validator: {
         '$or': [
-            {'name': {'$type': "string"}}
+            {'status': {'$type': "string"}}
         ]
     }
 }];

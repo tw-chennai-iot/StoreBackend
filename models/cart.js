@@ -6,7 +6,7 @@ var tag = require("./tag");
 var create = function (callback) {
     db.execute((db) => {
         var collection = db.collection('carts');
-        collection.insertOne({_id: uuidV4()}, function (err, r) {
+        collection.insertOne({_id: uuidV4(), status: 'unpaid'}, function (err, r) {
                 assert.equal(null, err);
                 console.log("cart is created");
                 callback(r.ops[0])
