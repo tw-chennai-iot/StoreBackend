@@ -81,7 +81,7 @@ var check = function (tagId, callback) {
         collection.findOne({tagId: tagId}, function (err, r) {
                 assert.equal(null, err);
                 if (r.cartId) {
-                    require('./cart').get(r.cartId, (cart) => callback(cart.stawtus == 'paid'))
+                    require('./cart').get(r.cartId, (cart) => callback(cart.status == 'paid'))
                 } else {
                     callback(false)
                 }
