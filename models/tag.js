@@ -3,10 +3,10 @@ var assert = require('assert');
 var product = require('./product');
 const uuidV4 = require('uuid/v4');
 
-var create = function (callback) {
+var create = function (tagId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.insertOne({_id: uuidV4()}, function (err, r) {
+        collection.insertOne({_id: tagId}, function (err, r) {
                 assert.equal(null, err);
                 console.log("Tag is created");
                 callback(r.ops[0])
