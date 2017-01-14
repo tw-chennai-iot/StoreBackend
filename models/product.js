@@ -2,7 +2,7 @@ var db = require('../db/db');
 var assert = require('assert');
 const uuidV4 = require('uuid/v4');
 
-var create = function (productName,price, callback) {
+var create = function (productName, price, callback) {
     db.execute((db) => {
         var collection = db.collection('products');
         collection.insertOne({_id: uuidV4(), name: productName, price: price}, function (err, r) {
@@ -24,9 +24,12 @@ var getAll = function (productTagMap, callback) {
         }).toArray(function (err, products) {
                 assert.equal(null, err);
                 var productDetails = productTagMap.map(pt => {
+                    var product = products.find(p => p._id === pt.productId);
                     return {
                         tagId: pt._id,
-                        product: products.find(p => p._id === pt.productId)
+                        productId: product._id,
+                        name: product.name,
+                        price: product.price
                     };
                 });
                 callback(productDetails)
