@@ -40,6 +40,7 @@ var get = function (cartId, callback) {
     db.execute((db) => {
         var collection = db.collection('carts');
         collection.find({_id: cartId}).toArray(function (err, r) {
+            console.log(r[0]);
             callback(r[0])
         });
     });

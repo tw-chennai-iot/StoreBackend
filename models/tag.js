@@ -80,9 +80,12 @@ var check = function (tagId, callback) {
         var collection = db.collection('tags');
         collection.findOne({tagId: tagId}, function (err, r) {
                 assert.equal(null, err);
+                console.log(r);
                 if (r.cartId) {
+                    console.log('in cart');
                     require('./cart').get(r.cartId, (cart) => callback(cart.status == 'paid'))
                 } else {
+                    console.log('not in cart');
                     callback(false)
                 }
             }
