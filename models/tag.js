@@ -6,7 +6,7 @@ const uuidV4 = require('uuid/v4');
 var create = function (tagId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.insertOne({_id: tagId}, function (err, r) {
+        collection.insertOne({tagId: tagId}, function (err, r) {
                 assert.equal(null, err);
                 console.log("Tag is created");
                 callback(r.ops[0])
@@ -19,10 +19,10 @@ var create = function (tagId, callback) {
 var update = function (tagId, productId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.update({_id: tagId}, {$set: {productId: productId}}, function (err, r) {
+        collection.update({tagId: tagId}, {$set: {productId: productId}}, function (err, r) {
                 assert.equal(null, err);
                 console.log("Tag is updated with product id");
-                collection.findOne({_id: tagId}, (e, r) => {
+                collection.findOne({tagId: tagId}, (e, r) => {
                     callback(r)
                 });
             }
@@ -34,7 +34,7 @@ var update = function (tagId, productId, callback) {
 var addToCart = function (tagId, cartId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.update({_id: tagId}, {$set: {cartId: cartId}}, function (err, r) {
+        collection.update({tagId: tagId}, {$set: {cartId: cartId}}, function (err, r) {
                 assert.equal(null, err);
                 console.log("Tag is add to a cart id");
                 callback();
@@ -46,7 +46,7 @@ var addToCart = function (tagId, cartId, callback) {
 var deleteFromCart = function (tagId, cartId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.update({_id: tagId, cartId: cartId}, {$set: {cartId: null}}, function (err, r) {
+        collection.update({tagId: tagId, cartId: cartId}, {$set: {cartId: null}}, function (err, r) {
                 assert.equal(null, err);
                 console.log("Tag is removed from a cart id");
                 callback();
@@ -78,7 +78,7 @@ var getAllProductDetails = function (cart, callback) {
 var check = function (tagId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
-        collection.findOne({_id: tagId}, function (err, r) {
+        collection.findOne({tagId: tagId}, function (err, r) {
                 assert.equal(null, err);
                 require('./cart').get(r.cartId, (cart) => callback(cart.status == 'paid'))
             }
