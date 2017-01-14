@@ -12,4 +12,9 @@ router.post('/:cartId', function (req, res) {
 
 });
 
+router.delete('/:cartId', function (req, res) {
+    tag.deleteFromCart(req.body.tagId, req.params.cartId, () => cart.getDetails(req.params.cartId, (data) => res.json(data)));
+
+});
+
 module.exports = router;

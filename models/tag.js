@@ -43,6 +43,18 @@ var addToCart = function (tagId, cartId, callback) {
     });
 };
 
+var deleteFromCart = function (tagId, cartId, callback) {
+    db.execute((db) => {
+        var collection = db.collection('tags');
+        collection.update({_id: tagId, cartId: cartId}, {$set: {cartId: null}}, function (err, r) {
+                assert.equal(null, err);
+                console.log("Tag is removed from a cart id");
+                callback();
+            }
+        );
+    });
+};
+
 var getAllProductDetails = function (cartId, callback) {
     db.execute((db) => {
         var collection = db.collection('tags');
@@ -58,5 +70,6 @@ module.exports = {
     create: create,
     update: update,
     addToCart: addToCart,
-    getAllProductDetails: getAllProductDetails
+    getAllProductDetails: getAllProductDetails,
+    deleteFromCart: deleteFromCart
 };
